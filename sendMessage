@@ -27,5 +27,5 @@ do
   name1=${name#?}
   nameTrimmed=${name1%?}
   echo "sendMessage to" ${nameTrimmed} "with" ${arr[$i]}
-  # sendMessageWithName ${arr[$i + 1]} ${nameTrimmed}
+  sendMessageWithName ${arr[$i + 1]} ${nameTrimmed}
 done
