@@ -1,5 +1,14 @@
 #! /bin/bash
-read -p "Phone Number: " phone
+
+# make phoneNumbers array
+phoneNumbers=`cat contacts.json | jq -r '.[] | .phone'`
+arr=($phoneNumbers)
+# read messageBody
 body=`cat messageBody`
 echo "$body"
-osascript sendMessage.applescript "$phone" "$body"
+#send!
+for phone in "${arr[@]}"
+do
+  echo "send to - " $phone
+  osascript sendMessage.applescript "$phone" "$body"
+done
