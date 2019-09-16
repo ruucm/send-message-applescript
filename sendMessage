@@ -1,14 +1,14 @@
 #! /bin/bash
 
+# sort first
+sortedContacts=`cat contacts.json | jq -Sc`
+echo 'sortedContacts - '$sortedContacts
 # make phoneNumbers array
-phoneNumbers=`cat contacts.json | jq -r '.[] | .phone'`
+phoneNumbers=`echo $sortedContacts | jq -r '.[] | .phone'`
 arr=($phoneNumbers)
-# read names
-customerNames=`cat contacts.json | jq -r 'keys'`
+# # read names
+customerNames=`echo $sortedContacts | jq 'keys'`
 arr2=($customerNames)
-# read messageBody
-body=`cat messageBody`
-echo "$body"
 #send!
 sendMessageWithName () {
   osascript sendMessage.applescript "$1" "[Message Title]
@@ -20,11 +20,12 @@ Hello "$2"!
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id ligula iaculis, tempor mi at, ultricies tellus. Vivamus accumsan purus turpis, quis dignissim tellus accumsan eget. Etiam eleifend rhoncus sem, sed semper enim convallis vitae. Maecenas posuere cursus nibh, feugiat venenatis magna. Nullam lobortis turpis sit amet ex mattis pellentesque. Nulla venenatis quam sed leo egestas, id rhoncus mi sodales. Donec tincidunt quam id pharetra aliquam. Sed ac nisl tincidunt, dapibus magna id, vehicula augue. Quisque quis sapien et orci lobortis mattis ut nec dui. Donec vel dictum nisi. Donec nec tincidunt tortor, in eleifend libero. Donec sagittis quam ut mi volutpat pellentesque. Donec neque ante, euismod at ex in, tincidunt hendrerit risus. Nunc vel orci accumsan, hendrerit odio eget, efficitur sapien.
 "
 }
+
 for i in "${!arr[@]}"
 do
   name=${arr2[$i + 1]//,}
   name1=${name#?}
   nameTrimmed=${name1%?}
   echo "sendMessage to" ${nameTrimmed} "with" ${arr[$i]}
-  sendMessageWithName ${arr[$i]} ${nameTrimmed}
+  # sendMessageWithName ${arr[$i + 1]} ${nameTrimmed}
 done
