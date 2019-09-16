@@ -1,0 +1,5 @@
+#! /bin/bash
+read -p "Phone Number: " phone
+body=`cat messageBody`
+echo "$body"
+osascript sendMessage.applescript "$phone" "$body"
